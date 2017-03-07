@@ -1,0 +1,59 @@
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+<script>
+$.ajax({
+    url: 'http://agl-developer-test.azurewebsites.net/people.json',
+    type: 'GET',
+    crossDomain: true,
+    dataType: 'jsonp',
+    success: function (data) { 
+    if(data){
+                var len = data.length;
+                var txt = "";
+                if(len > 0)
+                    for(var i=0;i<len;i++)
+                   {
+	       txt += "<tr><td class='td'>"+data[i].name+"</td><td class='td'>"+data[i].gender+"</td>";
+	       if(data[i].pets != null)
+  	       {// 
+
+		txt += "<td class='td'><table  class='fntInr'>";
+		for(var j=0;j<data[i].pets.length;j++){
+			txt += "<tr><td >" + data[i].pets[j].name  +  "(" + data[i].pets[j].type + ")" + "</td></tr>";}
+		txt += "</table></td>";
+	      }
+	else
+	        txt += "<td class='td fntInr'>No Pets for " + data[i].name + "!! </td>";
+	txt += "</tr>";
+	 }
+            }
+ $('#table').append(txt);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('error: ' + textStatus + ': ' + errorThrown);
+        }
+});
+</script>
+<style>
+* {    font-family:Consolas}
+.fntInr{font-size:12px;}
+.td{
+border: solid 1px;
+border-color: #000000;
+border-style: groovy;
+background-color: #DDD;
+}
+</style>
+<title>Test on Coding - AGL</title>
+</head>
+<body>
+<table id ="table">
+<tr >
+  <th class='td'>Owner Name</th>
+  <th class='td'>Gender</th>
+  <th class='td'>Owner's Pets</th>
+</tr>
+</table>
+</body>
+</html>
